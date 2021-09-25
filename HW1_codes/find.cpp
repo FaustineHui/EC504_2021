@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
   cout << "Bisection " << find_index_bisection << " vs Dictionary " <<  find_index_dictionary << endl;
   if(find_index_dictionary !=-1)
     {
-      cout << "Value found = "<<A[find_index_dictionary] << " for  key = " <<  key[0]<< endl;
+      cout << "Value found = "<<A[find_index_dictionary] << " for  key = " <<  key[k] << endl;
     }
   cout << "Bisection: Time =  " <<  difference_in_seconds_bisection << " OpCount = "  << OpCountBisection <<  endl;
   cout << "Dictionary: Time =  " <<  difference_in_seconds_dictionary << " OpCount =  "  << OpCountDictionary << endl;
@@ -111,19 +111,33 @@ Provide funtions below
 int findBisection(int key, int *a, int N)
 {
   int index = -1;
-  // while(??) {
-  OpCountBisection++;  // counts the number of call to routine
-   //}
-  
+  int left = 0, right = N - 1, mid = 0;
+  while (left <= right)
+  {
+      OpCountBisection++;  // counts the number of call to routine
+      mid = (left + right) / 2;
+      if (a[mid] == key) return index = mid;
+      else if (a[mid] > key) right = mid - 1;
+      else if (a[mid] < key) left = mid + 1;
+  }
   return index;
 }
 
 int findDictionary(int key, int *a, int N)
 {
   int index = -1;
-  // while(??) {
-      OpCountDictionary++;  // counts the number of call to routine
-      //}
+  int left = 0, right = N - 1, mid;
+  double x;
+
+  while (left < right) 
+  {
+      OpCountDictionary++;
+      x = double(key - a[left]) / (double(a[right] - a[left]));
+      mid = int(left + x * (right - left));
+      if (a[mid] == key) return index = mid;
+      else if (a[mid] > key) right = mid - 1;
+      else if (a[mid] < key) left = mid + 1;
+  }
   return index;
 }
 
